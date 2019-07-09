@@ -4,11 +4,37 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class N07NullableTypesKtTest {
+
+    @Test fun everythingIsOk() {
+        testSendMessageToClient(Client(PersonalInfo("bob@gmail.com")),
+            "Hi Bob! We have an awesome proposition for you...",
+            "bob@gmail.com",
+            true)
+    }
+    @Test fun blankEmail() {
+        testSendMessageToClient(Client(PersonalInfo(" ")), "Hi Bob! We have an awesome proposition for you...")
+    }
+    @Test fun emptyEmail() {
+        testSendMessageToClient(Client(PersonalInfo("")), "Hi Bob! We have an awesome proposition for you...")
+    }
+    @Test fun nullEmail() {
+        testSendMessageToClient(Client(PersonalInfo(null)), "Hi Bob! We have an awesome proposition for you...")
+    }
+    @Test fun noMessage() {
+        testSendMessageToClient(Client(PersonalInfo("bob@gmail.com")), null)
+    }
+    @Test fun noPersonalInfo() {
+        testSendMessageToClient(Client(null), "Hi Bob! We have an awesome proposition for you...")
+    }
+    @Test fun noClient() {
+        testSendMessageToClient(null, "Hi Bob! We have an awesome proposition for you...")
+    }
+
     private fun testSendMessageToClient(
-        client: Client?,
-        message: String?,
-        email: String? = null,
-        shouldBeInvoked: Boolean = false
+            client: Client?,
+            message: String?,
+            email: String? = null,
+            shouldBeInvoked: Boolean = false
     ) {
         var invoked = false
         sendMessageToClient(client, message, object : Mailer {
@@ -19,34 +45,7 @@ class N07NullableTypesKtTest {
             }
         })
         assertEquals(shouldBeInvoked, invoked,
-            "The function 'sendMessage' should${if (shouldBeInvoked) "" else "n't"} be invoked")
+                "The function 'sendMessage' should${if (shouldBeInvoked) "" else "n't"} be invoked")
     }
 
-    @Test
-    fun everythingIsOk() {
-        testSendMessageToClient(Client(PersonalInfo("bob@gmail.com")),
-            "Hi Bob! We have an awesome proposition for you...",
-            "bob@gmail.com",
-            true)
-    }
-
-    @Test
-    fun noMessage() {
-        testSendMessageToClient(Client(PersonalInfo("bob@gmail.com")), null)
-    }
-
-    @Test
-    fun noEmail() {
-        testSendMessageToClient(Client(PersonalInfo(null)), "Hi Bob! We have an awesome proposition for you...")
-    }
-
-    @Test
-    fun noPersonalInfo() {
-        testSendMessageToClient(Client(null), "Hi Bob! We have an awesome proposition for you...")
-    }
-
-    @Test
-    fun noClient() {
-        testSendMessageToClient(null, "Hi Bob! We have an awesome proposition for you...")
-    }
 }
