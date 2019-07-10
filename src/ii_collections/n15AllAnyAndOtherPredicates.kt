@@ -15,11 +15,11 @@ fun example2(list: List<Int>) {
 
 fun Customer.isFrom(city: City) = this.city == city
 
-fun Shop.checkAllCustomersAreFrom(city: City) = customers.all { it.city == city }
-//fun Shop.checkAllCustomersAreFrom(city: City) = customers.isNotEmpty() && !customers.any { it.city != city }
+fun Shop.checkAllCustomersAreFrom(city: City) = customers.all { it.isFrom(city) }
+//fun Shop.checkAllCustomersAreFrom(city: City) = !customers.any { !it.isFrom(city) }
 
-fun Shop.hasCustomerFrom(city: City) = customers.any { it.city == city}
+fun Shop.hasCustomerFrom(city: City) = customers.any { it.isFrom(it.city)}
 
-fun Shop.countCustomersFrom(city: City) = customers.count { it.city == city }
+fun Shop.countCustomersFrom(city: City) = customers.count { it.isFrom(city) }
 
-fun Shop.findFirstCustomerFrom(city: City) = customers.firstOrNull { it.city == city }
+fun Shop.findFirstCustomerFrom(city: City) = customers.firstOrNull { it.isFrom(city) }

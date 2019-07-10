@@ -9,6 +9,6 @@ fun example1(list: List<Int>) {
 }
 
 fun Shop.getCitiesCustomersAreFrom() = customers.map { it.city }.toSet()
-fun Shop.getCustomersFrom(city: City) = customers.filter { it.city == city }
+fun Shop.getCustomersFrom(city: City) = customers.filter { it.isFrom(city) }
 
 
