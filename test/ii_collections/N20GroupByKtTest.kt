@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 class N20GroupByKtTest {
     @Test
     fun testGroupCustomersByCity() {
+        println("shop: ${shop.customers.groupBy { it.city} }")
         assertEquals(groupedByCities, shop.groupCustomersByCity())
     }
 }
