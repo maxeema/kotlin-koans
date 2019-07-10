@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class N16FlatMapKtTest {
     @Test
     fun testGetOrderedProductsSet() {
-        assertEquals(setOf(idea), customers[reka]!!.orderedProducts)
+        assertEquals(setOf(idea), customers.getValue(reka).orderedProducts)
     }
 
     @Test
