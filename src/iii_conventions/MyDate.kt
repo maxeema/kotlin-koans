@@ -20,12 +20,13 @@ data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int): Comparabl
     override operator fun compareTo(other: MyDate) = c.compareTo(other.c)
 
 }
-
 operator fun MyDate.rangeTo(other: MyDate) = DateRange(this, other)
+operator fun MyDate.plus(t: TimeInterval) = this.addTimeIntervals(TimeInterval.DAY, t.days)
 
-enum class TimeInterval {
-    DAY,
-    WEEK,
-    YEAR
+open class TimeInterval(val days: Int) {
+    object DAY : TimeInterval(1)
+    object WEEK: TimeInterval(7)
+    object YEAR: TimeInterval(365)
 }
+operator fun TimeInterval.times(value: Int) = TimeInterval(value * days)
 
