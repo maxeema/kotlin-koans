@@ -8,24 +8,17 @@ fun todoTask38(): Nothing = TODO(
     """
 )
 
-fun <T> T.myApply(f: T.() -> Unit): T {
-    todoTask38()
-}
-
-fun buildString(): String {
-    return StringBuilder().myApply {
+fun buildString(): String
+    = StringBuilder().myApply {
         append("Numbers: ")
         for (i in 1..10) {
             append(i)
         }
     }.toString()
-}
 
-fun buildMap(): Map<Int, String> {
-    return hashMapOf<Int, String>().myApply {
-        put(0, "0")
-        for (i in 1..10) {
-            put(i, "$i")
-        }
+fun <T> T.myApply(block: T.()->Unit) : T = apply(block)
+
+fun buildMap(): Map<Int, String>
+    = hashMapOf<Int, String>().myApply {
+        (0..10).forEach { i-> put(i, "$i") }
     }
-}
