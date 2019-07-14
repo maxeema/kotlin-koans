@@ -3,6 +3,7 @@ package iv_properties
 import iii_conventions.MyDate
 import util.TODO
 import java.util.*
+import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -19,18 +20,31 @@ fun todoTask35(): Nothing = TODO(
     references = { date: MyDate -> date.toMillis().toDate() }
 )
 
-class D {
-    var date by EffectiveDate()
+open class DAbstr {
+    val d = "D"
+}
+class D : DAbstr() {
+    //
+    var date by EffectiveDate<DAbstr,  MyDate>()
     // The property date$delegate of type EffectiveDate is created;
     // the generated 'get' and 'set' accessors for 'date' are delegated to it.
     // You can look at the bytecode (by calling "Show Kotlin Bytecode" action in IntelliJ IDEA) for details.
+    var date2 by EffectiveDate<D,  MyDate>()
+    init {
+        date2 = 1254L.toDate()
+        println("date2: $date2")
+    }
 }
 
-class EffectiveDate<R> : ReadWriteProperty<R, MyDate> {
+class EffectiveDate<R: DAbstr, T: MyDate> : ReadWriteProperty<R, T> {
     var timeInMillis: Long? = null
 
-    operator override fun getValue(thisRef: R, property: KProperty<*>): MyDate = todoTask35()
-    operator override fun setValue(thisRef: R, property: KProperty<*>, value: MyDate) = todoTask35()
+    override operator fun getValue(thisRef: R, property: KProperty<*>): T = timeInMillis!!.toDate() as T
+
+    override operator fun setValue(thisRef: R, property: KProperty<*>, value: T) {
+        println("setValue ${thisRef.d}, ${property.name}, $value")
+        timeInMillis = value.toMillis()
+    }
 }
 
 fun MyDate.toMillis(): Long {
