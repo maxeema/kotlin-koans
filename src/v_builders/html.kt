@@ -40,7 +40,7 @@ class Text(val text: String) : Tag("b") {
     override fun toString() = text
 }
 
-fun html(init: Html.() -> Unit): Html = Html().apply(init)
+fun html(init: Html.() -> Unit) = Html().apply(init)
 
 fun Html.table(init: Table.() -> Unit) = doInit(Table(), init)
 fun Html.center(init: Center.() -> Unit) = doInit(Center(), init)
