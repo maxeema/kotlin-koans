@@ -14,11 +14,24 @@ fun todoTask36(): Nothing = TODO(
 )
 
 fun task36(): List<Boolean> {
-    val isEven: Int.() -> Boolean = { todoTask36() }
-    val isOdd: Int.() -> Boolean = { todoTask36() }
+    val isOdd: Int.() -> Boolean = { this%2==1 }
+    val isEven: Int.() -> Boolean = { rem(2)==0 }
+    
+    val sum: Short.(Short) -> Int = { other-> this + other }
+    val sum2 = fun Short.(other: Short) : Int = other + this
+
+    fun f(process: Short.()->Short) {
+        val s = 10.toShort()
+        println(s)
+        println(s.process())
+    }
+
+    f {
+        println("this $this")
+        this.sum(3.toShort().sum2(5.toShort()).toShort()).toShort()
+    }
 
     return listOf(42.isOdd(), 239.isOdd(), 294823098.isEven())
 }
-
 
 
