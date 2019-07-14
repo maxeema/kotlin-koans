@@ -2,9 +2,32 @@ package iv_properties
 
 import util.TODO
 import util.doc34
+import kotlin.random.Random
 
-class LazyPropertyUsingDelegates(val initializer: () -> Int) {
-    val lazyValue: Int by todoTask34()
+class LazyPropertyUsingDelegates(initializer: () -> Int) {
+    val lazyValue: Int by lazy {
+        println("lazyValue accessing...")
+        initializer()
+    }
+    val value
+        get() = System.currentTimeMillis()
+}
+
+fun main() {
+    println("in main: 1")
+    LazyPropertyUsingDelegates {
+        Random.nextInt(Int.MAX_VALUE).apply {
+            println("Random nextInt $this")
+        }
+    }.apply {
+        println("in main: 2")
+        println("value $value")
+        println("lazyValue $lazyValue")
+        println("in main: 3")
+        println("value $value")
+        println("lazyValue $lazyValue")
+    }
+    println("in main: 4")
 }
 
 fun todoTask34(): Lazy<Int> = TODO(
